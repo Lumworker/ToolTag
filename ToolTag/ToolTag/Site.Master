@@ -1,0 +1,305 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="ToolTag.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - ToolTag</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <%--<link href="Content/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />--%>
+    <link href="Content/datatables.min.css" rel="stylesheet" />
+    <link href="Content/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="Content/responsive.bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/sideNav.css" rel="stylesheet" />
+    <link href="Content/smart_wizard.min.css" rel="stylesheet" />
+    <link href="Content/smart_wizard_theme_arrows.min.css" rel="stylesheet" />
+    <link href="Content/smart_wizard_theme_circles.min.css" rel="stylesheet" />
+    <link href="Content/smart_wizard_theme_dots.min.css" rel="stylesheet" />
+    <link href="lib/jquery.datetimepicker.min.css" rel="stylesheet" />
+    <%--<link href="lib/dropzone/basic.min.css" rel="stylesheet" />--%>
+<%--    <link href="lib/dropzone/dropzone.min.css" rel="stylesheet" />--%>
+    <link href="lib/datepicker/datepicker.min.css" rel="stylesheet" />
+    <link href="Content/UploadFile.css" rel="stylesheet" />
+
+
+</head>
+<body>
+    <style>
+        .datepicker > div {
+            display: inherit;
+        }
+
+        .ui-autocomplete {
+            z-index: 999999;
+            max-height: 200px;
+            overflow-y: auto; /* prevent horizontal scrollbar */
+            overflow-x: hidden; /* add padding to account for vertical scrollbar */
+            padding-right: 20px;
+        }
+
+        .radio-group label {
+            overflow: hidden;
+        }
+
+        .radio-group input {
+            height: 1px;
+            width: 1px;
+            position: absolute;
+            top: -20px;
+        }
+
+        .radio-group .not-active {
+            color: #3276b1;
+            background-color: #fff;
+        }
+
+        .dropdown-menu {
+            -webkit-transition: all .5s ease-out;
+            transition: all .5s ease-out;
+            transform: rotateX(90deg);
+            transform-origin: top;
+            opacity: 0;
+            display: block;
+            border: none;
+            margin-left: 5rem;
+        }
+
+        .open .dropdown-menu {
+            opacity: 1;
+            transform: rotateX(0deg);
+            transform-origin: top;
+            border: none;
+            /*position: relative;*/
+            background-color: #bfbfbf;
+        }
+    </style>
+
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+        <script src="lib/sweetalert/sweetalert.min.js"></script>
+        <script src="Scripts/datatables.min.js"></script>
+        <script src="Scripts/dataTables.responsive.min.js"></script>
+        <script src="Scripts/dataTables.bootstrap.js"></script>
+        <script src="Content/jquery.smartWizard.min.js"></script>
+        <script src="lib/jquery.datetimepicker.full.min.js"></script>
+        <%--<script src="lib/dropzone/dropzone.min.js"></script>--%>
+        <%--<script src="lib/dropzone/dropzone-amd-module.min.js"></script>--%>
+        <%--<script src="Scripts/bootstrap-datepicker.min.js"></script>--%>
+        <script src="lib/datepicker/datepicker.min.js"></script>
+        <script src="Scripts/Currency.js"></script>
+
+         <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <span class="navbar-brand" style="font-size: 30px; cursor: pointer" onclick="openNav()">&#9776;</span>
+                    <a href="javascript:void(0)" class="navbar-brand" style="font-size: 20px; margin-top: 0.2em; cursor: default">Tool Tag</a>
+                </div>
+                <div id="mySidenav" class="sidenav">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                    <a href="./ListToolTag.aspx" id="ListToolTag" style="font-size: 18px;">List ToolTag</a>
+                    <a href="./Monitering.aspx" id="Monitoring" style="font-size: 18px;">Monitoring</a>
+                    <a href="./Generate_ToolTag.aspx" id="GenerateToolTag" style="font-size: 18px;">Generate ToolTag</a>
+                    <a href="./Maintain_MasterData.aspx" id="MaintainMaster" style="font-size: 18px;">Maintain Master</a>
+                    <%--<a href="./MaintainToolTag.aspx" id="MaintainToolTag" style="font-size: 18px;">Maintain ToolTag</a>--%>
+                    <%--<a href="./Default.aspx" id="Default" style="font-size: 18px;">Home</a>
+                    <a href="./test.aspx" id="ttest" style="font-size: 18px;">test</a>--%>
+                 
+                    <%--<div class="dropdown">
+                        <a id="ITTagMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="font-size: 18px;">IT TAG<span style="font-size: 15px;" class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a>
+                        <ul class="dropdown-menu animate" aria-labelledby="leaveMenu">
+                            <li><a href="./PMAllLineITTag.aspx" id="PMAllLineITTag" style="font-size: 14px;">Maintain IT TAG</a></li>
+                              <li><a href="./ITTAG_Monitoring.aspx"  id="Monitering" style="font-size: 14px;">Monitoring</a></li>
+                              <li><a href="./ITTAG_MaintainPE.aspx"  id="MaintainPE" style="font-size: 14px;">Maintain Equipment Owner</a></li>
+                              <li><a href="./ITTAG_GenerateITTAGCode.aspx" id="GenerateITTAGCode" style="font-size: 14px;">Generate IT TAG Code</a></li>
+                              <li><a href="./ITTAG_TranferPE.aspx"  id="ITTAG_TranferPE" style="font-size: 14px;">IT TAG Tranfer Owner</a></li>
+                              <li><a href="./ITTAG_MaintainTagGroup.aspx" id="MaintainTagGroup" style="font-size: 14px;">Maintain IT TAG Group</a></li>
+                              <li><a href="./ITTAG_MaintainITCharge.aspx"  id="MaintainCharge" style="font-size: 14px;">Maintain IT TAG Charge</a></li>
+                              <li><a href="./ITTAG_MaintainJD.aspx"  id="MaintainJD" style="font-size: 14px;">Maintain Software Group(JD)</a></li>
+                              <li><a href="./ITTAG_Report.aspx"  id="ITTAG_Report" style="font-size: 14px;">Report</a></li>
+                              <li><a href="./ITTAG_Permission.aspx"  id="ITTAGPermission" style="font-size: 14px;">Permission</a></li>
+                        </ul>
+                    </div>--%>
+                    
+                </div>
+                
+                <ul class="nav navbar-nav pull-go-to-right ul_site_ref" style="float:right;">
+                    <li style="margin-top: 0.2em;">
+                        <button type="button" class="hovermenuprofile" data-toggle="modal" data-target="#ModalMenuSiteRef" style="background-color: #b3e6ff; border: none; margin-top: 15px; margin-left: 10px; margin-bottom: 15px; border-radius: 10Px; width: 100px"><span id="Showsite_ref">Site_ref</span> <i class='glyphicon glyphicon-log-out'></i></button>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+
+        <div class="container body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <hr />
+            <footer>
+                <p>&copy; <%: DateTime.Now.Year %> - ToolTag</p>
+            </footer>
+        </div>
+
+        <div class="modal fade" id="ModalMenuSiteRef" role="dialog" style="z-index: 9999;">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content" style="max-width: 100%">
+                    <div class="modal-header">
+                        <div class="col-md-12 col-lg-12 col-sm-12" style="margin-bottom: 1em; padding-left: 0.5em;">
+                            <button type="button" class="close" data-dismiss="modal" style="font-size: 2.5em;">&times;</button>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <p class="text-center">
+                                <img class="text-center" src="images/PATKOL2.gif" />
+                            </p>
+                            <div class="col-md=12">
+                                <div class="form-group">
+                                    <h3 style="text-align: center">Please Select</h3>
+                                </div>
+                                <div class=" row form-group">
+                                    <div class="col-md-12">
+                                        <div class="col-md-12">
+                                            <select id="text_Navsite_ref" class="form-control" style="margin: auto; max-width: 350px !important;min-width: 350px !important; text-align-last: center;">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>
+                                    <button id="clickselect_Nevsite_ref" class="btn btn-info btn-block" type="button" style="max-width: 350px; margin: auto">Submit</button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+         <div class="modal fade" id="IMGUpload" style="display: none; position: fixed; z-index: 9999; overflow: auto; top: 40%;text-align:center;" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <img src="images/PATKOL2.gif" class="modal-content imgPreviewG" style="width: 10em; height: 10em;">
+            </div>
+        </div>
+        
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+                SetModal_site_ref();
+                var site_ref = getAllUrlParams("site_ref");
+                if (site_ref) {
+                    $("#Showsite_ref").text(site_ref);
+                    $("#MaintainMaster").attr("href", $("#MaintainMaster").attr("href") + "?site_ref=" + site_ref);
+                    $("#ListToolTag").attr("href", $("#ListToolTag").attr("href") + "?site_ref=" + site_ref);
+                    $("#Monitoring").attr("href", $("#Monitoring").attr("href") + "?site_ref=" + site_ref);
+                    $("#GenerateToolTag").attr("href", $("#GenerateToolTag").attr("href") + "?site_ref=" + site_ref);
+                } else {
+                    $("#ModalMenuSiteRef").modal("show");
+                }
+
+                CheckPage_show_site_ref();
+
+                $(document).on("click", "#clickselect_Nevsite_ref", function () {
+                    var url = window.location.pathname;   
+                    var select_site_ref = $("#text_Navsite_ref").val();
+
+                    window.location.href = url + '?site_ref=' + select_site_ref;
+                    
+                });
+                
+            });
+
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "300px";
+            }
+
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+            }
+
+            function getAllUrlParams(sParam) {
+
+                var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                    sURLVariables = sPageURL.split('&'),
+                    sParameterName,
+                    i;
+
+                for (i = 0; i < sURLVariables.length; i++) {
+                    sParameterName = sURLVariables[i].split('=');
+
+                    if (sParameterName[0] === sParam) {
+                        return sParameterName[1];
+                    } else {
+
+                    }
+                }
+            }
+
+            function SetModal_site_ref() {
+                var site_ref = '<option value="">=======Please Select a company=======</option>';
+                $.ajax({
+                    type: "post",
+                    async: false,
+                    url: "<%=ResolveUrl("Default.aspx/GetSite_ref")%>",
+                    contentType: "application/json; charset = utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.d.length > 0) {
+                            $.each(response.d, function (index, val) {
+                                var ID = val[0];
+                                var company = val[1];
+                                site_ref += '<option value="' + ID + '">' + company + '</option>';
+                            });
+                            $("#text_Navsite_ref").append(site_ref);
+                        }
+                    }
+                });
+            }
+
+            function CheckPage_show_site_ref() {
+                var url = window.location.pathname;
+                if (url.substr(1, (url.length) - 6) == "Maintain_MasterData") {
+                    $(".ul_site_ref").hide();
+                } else {
+                    $(".ul_site_ref").show();
+                }
+            }
+            
+
+
+        </script>
+    </form>
+</body>
+</html>
